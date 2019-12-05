@@ -196,61 +196,75 @@ std::string UUDate::GetDate() {
 //
 std::string CalculateDateFwd(UUDate& date, int days) {
 	// TODO: Implementation here
-	int maxDays[13]{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	int maxDaysLeap[13]{ 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	days = date.day_;
-	if (CheckLeapYear(date.year_)) {
-		if (date.day_ <= maxDaysLeap[date.month_]) {
-			date.day_ = date.day_ - 8;
-			date.month_++;
+		//int maxDays[13]{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		//int maxDaysLeap[13]{ 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		//days = date.day_;
+		//if (CheckLeapYear(date.year_)) {
+		//	if (date.day_ <= maxDaysLeap[date.month_]) {
+		//		date.day_ = date.day_ - 8;
+		//		date.month_++;
+		//	}
+		//	else {
+		//		//date.day_  <= maxDays[date.month_];
+		//		//date.day_ = date.day_ + days;
+		//		//date.month_++;
+		//	}
+		if (CheckLeapYear(date.year_)) {
+		date.day_++;
 		}
-		else {
-			date.day_  <= maxDays[date.month_];
-			date.day_ = date.day_ + days;
-			date.month_++;
+		for (int i = 0; i < days; i++) {
+			date.IncrementDate();
+		}
+			return date.GetDate();
+		}
+	
+
+	// Friend function to return a string of date given object current date and days
+	// Similar to the function CalculateDateFwd, however, this function will only take into account working days in the year
+	// You need to take into consideration bank holidays that are happening throughout the year
+	//
+	// Bank holiday considered in this class: https://en.wikipedia.org/wiki/Bank_holiday
+	// ---------------------------------------------------------------------------------------
+	// All the bank holidays for Northern Ireland as stated in the wiki entry will have to be considered
+	// You will need to create some utility functions to help you calculate those holidays and weekends
+	//
+	// How to retrieve day of the week:
+	// --------------------------------
+	// Information to help retrieving the date and days: https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
+	// Additional document to help: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
+	// Follow this pseudo-code:
+	//  1. Take the last two digits of the year.
+	//  2. Divide by 4, discarding any fraction.
+	//  3. Add the day of the month.
+	//  4. Add the month's key value: JFM AMJ JAS OND 144 025 036 146
+	//  5. Subtract 1 for January or February of a leap year.
+	//  6. For a Gregorian date, add 0 for 1900's, 6 for 2000's, 4 for 1700's, 2 for 1800's;
+	//  7. Add the last two digits of the year.
+	//  8. Divide by 7 and take the remainder.
+	//  Now 1 is Sunday, the first day of the week, 2 is Monday, and so on.
+	//
+	// How to calculate Christian holidays
+	// -----------------------------------
+	// //Information to help calculating christian holidays: https://www.codeproject.com/Articles/10860/Calculating-Christian-Holidays
+	//
+	std::string CalculateWorkingDateFwd(UUDate & date, int days) {
+		// TODO: Implementation here
+
+		/*int year = date.year_ % 100; //1
+		date.year_ / 4;				//2
+		date.day_ = date.day_ + days; //3 if (day_ = 1||2||3||4||5){ date.days_ = date.days_ + 1;
+		//4
+		if (CheckLeapYear(date.year_) || date.month_ == 01 || 02){//5
+			date.day_ - 1;
+		}
+		*/
+
+		if (CheckLeapYear(date.year_)) {
+			date.day_++;
+		}
+		for (int i = 0; i < days; i++) {
+			date.IncrementDate();
 		}
 		return date.GetDate();
 	}
-}
-// Friend function to return a string of date given object current date and days
-// Similar to the function CalculateDateFwd, however, this function will only take into account working days in the year
-// You need to take into consideration bank holidays that are happening throughout the year
-//
-// Bank holiday considered in this class: https://en.wikipedia.org/wiki/Bank_holiday
-// ---------------------------------------------------------------------------------------
-// All the bank holidays for Northern Ireland as stated in the wiki entry will have to be considered
-// You will need to create some utility functions to help you calculate those holidays and weekends
-//
-// How to retrieve day of the week:
-// --------------------------------
-// Information to help retrieving the date and days: https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
-// Additional document to help: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
-// Follow this pseudo-code:
-//  1. Take the last two digits of the year.
-//  2. Divide by 4, discarding any fraction.
-//  3. Add the day of the month.
-//  4. Add the month's key value: JFM AMJ JAS OND 144 025 036 146
-//  5. Subtract 1 for January or February of a leap year.
-//  6. For a Gregorian date, add 0 for 1900's, 6 for 2000's, 4 for 1700's, 2 for 1800's;
-//  7. Add the last two digits of the year.
-//  8. Divide by 7 and take the remainder.
-//  Now 1 is Sunday, the first day of the week, 2 is Monday, and so on.
-//
-// How to calculate Christian holidays
-// -----------------------------------
-// //Information to help calculating christian holidays: https://www.codeproject.com/Articles/10860/Calculating-Christian-Holidays
-//
-std::string CalculateWorkingDateFwd(UUDate& date, int days) {
-	// TODO: Implementation here
-
-	int year = date.year_ % 100; //1
-	date.year_ / 4;				//2
-	date.day_ = date.day_ + days; //3 if (day_ = 1||2||3||4||5){ date.days_ = date.days_ + 1;
-	//4
-	if (CheckLeapYear(date.year_) || date.month_ == 01 || 02){//5
-		date.day_ - 1;
-	}
-
-}
-		return date.GetDate;
-}
+	

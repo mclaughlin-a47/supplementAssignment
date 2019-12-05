@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Aaron/source/repos/assignment-1-supp-mclaughlin-a47
+# Install script for directory: C:/Users/csf18mla/source/repos/supplementAssignment
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/Aaron/Source/Repos/assignment-1-supp-mclaughlin-a47/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/csf18mla/Source/Repos/supplementAssignment/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Aaron/source/repos/assignment-1-supp-mclaughlin-a47/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/csf18mla/source/repos/supplementAssignment/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
