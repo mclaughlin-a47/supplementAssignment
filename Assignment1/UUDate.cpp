@@ -260,10 +260,10 @@ std::string CalculateWorkingDateFwd(UUDate& date, int days) {
 	}
 	days = (date.day_ + (2 * date.month_) + int(6 * (date.month_ + 1) / 10) + date.year_ + int(date.year_ / 4) - int(date.year_ / 100) + int(date.year_ / 400)+ days	) % 7;
 	date.day_ = date.day_ + days;
-	/*date.year_ = date.year_ % 100; //1
-	date.year_ / 4;				//2
-	date.day_ = date.day_ + date.year_; //3
-	//4
+	/*date.year_ = date.year_ % 100; 
+	date.year_ / 4;				
+	date.day_ = date.day_ + date.year_; 
+	
 	if (CheckLeapYear(date.year_ && date.month_ == 01 || 02)){
 		date.day_ - 1};//5
 	if (CheckLeapYear(date.year_)) {
