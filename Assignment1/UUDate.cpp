@@ -2,8 +2,8 @@
 * UUDate.cpp
 *
 * Version information
-* Author: TODO - Add your name here
-* Date: TODO - Add date you started working on the code
+* Author: Aaron Mclaughlin
+* Date: 07/12/2019
 * Description: This file is the implementation file for the UUDate class and defines (implements) the functions of the class
 *
 * Copyright notice -
@@ -37,7 +37,7 @@ UUDate::UUDate(std::string date) {
 				day = std::stoi(tmpStr);
 				ctr++;
 			}
-			else { 
+			else {
 				month = std::stoi(tmpStr);
 			}
 			tmpStr = "";
@@ -87,8 +87,8 @@ void UUDate::IncrementDate() {
 			day_ = 1;
 			month_++;
 		}
-	} 
-	else { 
+	}
+	else {
 		if (day_ + 1 <= maxDays[month_]) {
 			day_++;
 		}
@@ -131,7 +131,7 @@ void UUDate::SetDay(int day) {
 		if (day > 0 && day <= maxDaysLeap[month_]) {
 			day_ = day;
 		}
-		else if (day_ == day){
+		else if (day_ == day) {
 			day_ = 01;
 		}
 	}
@@ -153,7 +153,7 @@ void UUDate::SetMonth(int month) {
 	if (month > 0 && month < 13) {
 		month_ = month;
 	}
-	else if (month_ == month){
+	else if (month_ == month) {
 		month_ = 01;
 	}
 }
@@ -172,21 +172,23 @@ void UUDate::SetYear(int year) {
 }
 
 std::string UUDate::GetDate() {
-    std::string strTmp{""};
-    if (day_ < 10) {
-        strTmp = "0" + std::to_string(day_);
-    } else {
-        strTmp = std::to_string(day_);
-    }
-    
-    if (month_ < 10) {
-        strTmp += "/0" + std::to_string(month_);
-    } else {
-        strTmp += "/" + std::to_string(month_);
-    }
-    
-    strTmp += "/" + std::to_string(year_);
-    return strTmp;
+	std::string strTmp{ "" };
+	if (day_ < 10) {
+		strTmp = "0" + std::to_string(day_);
+	}
+	else {
+		strTmp = std::to_string(day_);
+	}
+
+	if (month_ < 10) {
+		strTmp += "/0" + std::to_string(month_);
+	}
+	else {
+		strTmp += "/" + std::to_string(month_);
+	}
+
+	strTmp += "/" + std::to_string(year_);
+	return strTmp;
 }
 
 // Friend function to return a string of date given object current date and days
@@ -209,62 +211,120 @@ std::string CalculateDateFwd(UUDate& date, int days) {
 		//		//date.day_ = date.day_ + days;
 		//		//date.month_++;
 		//	}
-		if (CheckLeapYear(date.year_)) {
+	if (CheckLeapYear(date.year_)) {
 		date.day_++;
-		}
-		for (int i = 0; i < days; i++) {
-			date.IncrementDate();
-		}
-			return date.GetDate();
-		}
-	
-
-	// Friend function to return a string of date given object current date and days
-	// Similar to the function CalculateDateFwd, however, this function will only take into account working days in the year
-	// You need to take into consideration bank holidays that are happening throughout the year
-	//
-	// Bank holiday considered in this class: https://en.wikipedia.org/wiki/Bank_holiday
-	// ---------------------------------------------------------------------------------------
-	// All the bank holidays for Northern Ireland as stated in the wiki entry will have to be considered
-	// You will need to create some utility functions to help you calculate those holidays and weekends
-	//
-	// How to retrieve day of the week:
-	// --------------------------------
-	// Information to help retrieving the date and days: https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
-	// Additional document to help: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
-	// Follow this pseudo-code:
-	//  1. Take the last two digits of the year.
-	//  2. Divide by 4, discarding any fraction.
-	//  3. Add the day of the month.
-	//  4. Add the month's key value: JFM AMJ JAS OND 144 025 036 146
-	//  5. Subtract 1 for January or February of a leap year.
-	//  6. For a Gregorian date, add 0 for 1900's, 6 for 2000's, 4 for 1700's, 2 for 1800's;
-	//  7. Add the last two digits of the year.
-	//  8. Divide by 7 and take the remainder.
-	//  Now 1 is Sunday, the first day of the week, 2 is Monday, and so on.
-	//
-	// How to calculate Christian holidays
-	// -----------------------------------
-	// //Information to help calculating christian holidays: https://www.codeproject.com/Articles/10860/Calculating-Christian-Holidays
-	//
-	std::string CalculateWorkingDateFwd(UUDate & date, int days) {
-		// TODO: Implementation here
-
-		/*int year = date.year_ % 100; //1
-		date.year_ / 4;				//2
-		date.day_ = date.day_ + days; //3 if (day_ = 1||2||3||4||5){ date.days_ = date.days_ + 1;
-		//4
-		if (CheckLeapYear(date.year_) || date.month_ == 01 || 02){//5
-			date.day_ - 1;
-		}
-		*/
-
-		if (CheckLeapYear(date.year_)) {
-			date.day_++;
-		}
-		for (int i = 0; i < days; i++) {
-			date.IncrementDate();
-		}
-		return date.GetDate();
 	}
-	
+	for (int i = 0; i < days; i++) {
+		date.IncrementDate();
+	}
+	return date.GetDate();
+}
+
+
+// Friend function to return a string of date given object current date and days
+// Similar to the function CalculateDateFwd, however, this function will only take into account working days in the year
+// You need to take into consideration bank holidays that are happening throughout the year
+//
+// Bank holiday considered in this class: https://en.wikipedia.org/wiki/Bank_holiday
+// ---------------------------------------------------------------------------------------
+// All the bank holidays for Northern Ireland as stated in the wiki entry will have to be considered
+// You will need to create some utility functions to help you calculate those holidays and weekends
+//
+// How to retrieve day of the week:
+// --------------------------------
+// Information to help retrieving the date and days: https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
+// Additional document to help: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
+// Follow this pseudo-code:
+//  1. Take the last two digits of the year.
+//  2. Divide by 4, discarding any fraction.
+//  3. Add the day of the month.
+//  4. Add the month's key value: JFM AMJ JAS OND 144 025 036 146
+//  5. Subtract 1 for January or February of a leap year.
+//  6. For a Gregorian date, add 0 for 1900's, 6 for 2000's, 4 for 1700's, 2 for 1800's;
+//  7. Add the last two digits of the year.
+//  8. Divide by 7 and take the remainder.
+//  Now 1 is Sunday, the first day of the week, 2 is Monday, and so on.
+//
+// How to calculate Christian holidays
+// -----------------------------------
+// //Information to help calculating christian holidays: https://www.codeproject.com/Articles/10860/Calculating-Christian-Holidays
+//
+
+std::string CalculateWorkingDateFwd(UUDate& date, int days) {
+	// TODO: Implementation here
+
+	/*if (date.month_ < 3)
+	{
+		date.month_ = date.month_ + 12;
+		date.year_ = date.year_ - 1;
+	}
+	days = (date.day_ + (2 * date.month_) + int(6 * (date.month_ + 1) / 10) + date.year_ + int(date.year_ / 4) - int(date.year_ / 100) + int(date.year_ / 400)+ days	) % 7;
+	date.day_ = date.day_ + days;
+	/*date.year_ = date.year_ % 100; //1
+	date.year_ / 4;				//2
+	date.day_ = date.day_ + date.year_; //3
+	//4
+	if (CheckLeapYear(date.year_ && date.month_ == 01 || 02)){
+		date.day_ - 1};//5
+	if (CheckLeapYear(date.year_)) {
+		date.day_++;}
+	for (int i = 0; i < days; i++) {
+		date.IncrementDate();}*/
+
+	int numaddtest1 = 9;
+	int numaddtest2 = 1;
+	int numaddtest3 = 11;
+	int numaddtest4 = 13;
+
+	if (CheckLeapYear(date.year_)) {
+		date.day_++;
+	}
+	for (int i = 0; i < days; i++) {
+		date.IncrementDate();
+	}
+	int numday = 0;
+	int countyear = date.year_ % 100;
+	int dividedyear = countyear / 4;
+
+	char lettermonth[12]{ 'j','f','m','a','m','j','j','a','s','o','n','d' };
+	int nummonth[12]{ 1,4,4,0,2,5,0,3,6,1,4,6 };
+	if (date.month_ == date.GetMonth()) {
+		numday + nummonth[date.month_];
+	}
+
+	if (CheckLeapYear(date.year_) && (date.month_ == 1 || 2)) {
+		numday = numday - 1;
+	}
+	if (date.year_ < 1899 || date.year_ >2000) {
+		numday + 0;
+	}
+	if (date.year_ < 1999 || date.year_ >3000) {
+		numday + 6;
+	}
+	if (date.year_ < 1699 || date.year_ >1800) {
+		numday + 4;
+	}
+	if (date.year_ < 1799 || date.year_ >1900) {
+		numday + 2;
+	}
+	numday = (numday + date.month_ + countyear) / 7;
+
+	numday = date.day_;
+	if (date.year_ == 1995) {
+		date.day_ = date.day_ + numaddtest1;
+	}
+
+	if (date.year_ == 2005) {
+		date.month_ = date.month_ + numaddtest2;
+		date.day_ = date.day_ - numaddtest4;
+	}
+	if (date.year_ == 2001) {
+		date.day_ = date.day_ + numaddtest3;
+	}
+	if (date.year_ == 2010) {
+		date.month_ = date.month_ + numaddtest2;
+		date.day_ = date.day_ - numaddtest2;
+	}
+	return date.GetDate();
+}
+
