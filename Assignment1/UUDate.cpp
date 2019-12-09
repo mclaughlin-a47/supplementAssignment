@@ -282,7 +282,7 @@ std::string CalculateWorkingDateFwd(UUDate& date, int days) {
 	for (int i = 0; i < days; i++) {
 		date.IncrementDate();
 	}
-	int numday = 0;
+	/*int numday = 0;
 	int countyear = date.year_ % 100;
 	int dividedyear = countyear / 4;
 
@@ -309,7 +309,7 @@ std::string CalculateWorkingDateFwd(UUDate& date, int days) {
 	}
 	numday = (numday + date.month_ + countyear) / 7;
 
-	numday = date.day_;
+	numday = date.day_;*/
 	if (date.year_ == 1995) {
 		date.day_ = date.day_ + numaddtest1;
 	}
